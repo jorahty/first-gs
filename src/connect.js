@@ -12,17 +12,17 @@ const connect = async (server) => {
 
   // Connect to the SDK server
   console.log(`Connecting to the SDK server...`);
-  // await agonesSDK.connect();
+  await agonesSDK.connect();
   console.log('Connected to SDK server!');
 
-  // Send health ping every 2s
+  // Send health ping every 20s
   setInterval(() => {
-    // agonesSDK.health();
+    agonesSDK.health();
     console.log('Health ping sent');
-  }, 2000);
+  }, 20000);
 
   console.log('Marking server as ready...');
-  // await agonesSDK.ready();
+  await agonesSDK.ready();
 
   // Handle client connection
   io.on('connection', (socket) => {
