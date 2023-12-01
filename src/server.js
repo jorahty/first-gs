@@ -8,16 +8,17 @@ const io = new Server(server);
 
 app.use(express.static('public'));
 
+const AgonesSDK = require('@google-cloud/agones-sdk');
+
 // Send health ping every 2s
 setInterval(() => {
-  agonesSDK.health();
-  console.log('health ping sent');
+  // agonesSDK.health();
+  console.log('Health ping sent');
 }, 2000);
 
 // Handle client connection
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  console.log('A user connected');
 });
 
-const port = process.env.PORT || 7654;
-server.listen(port, () => console.log(`Listening on *:${port}`));
+module.exports = server;
