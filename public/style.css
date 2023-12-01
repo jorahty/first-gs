@@ -1,0 +1,13 @@
+html {
+  color-scheme: light dark;
+}
+
+* {
+  font-family: system-ui;
+}
+
+body {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+}
