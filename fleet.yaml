@@ -15,23 +15,24 @@
 apiVersion: agones.dev/v1
 kind: Fleet
 metadata:
-  name: simple-game-server
+  name: first-gs
 spec:
-  replicas: 2
+  replicas: 3
   template:
     spec:
       ports:
         - name: default
+          portPolicy: Dynamic
           containerPort: 7654
+          protocol: TCP
+      health:
+        # waits for 30 seconds before checking health
+        initialDelaySeconds: 30
+        # health ping sends every 20 seconds, so let's give it 5 seconds buffer
+        periodSeconds: 25
       template:
         spec:
           containers:
-            - name: simple-game-server
-              image: us-docker.pkg.dev/agones-images/examples/simple-game-server:0.21
-              resources:
-                requests:
-                  memory: 64Mi
-                  cpu: 20m
-                limits:
-                  memory: 64Mi
-                  cpu: 20m
+            - name: first-gs
+              image: jorahty/first-gs
+              # args: ["--timeout=0"]  # Change the timeout here, if you like the nodejs server to run longer.
