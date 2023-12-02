@@ -28,6 +28,11 @@ const connect = async (server) => {
   io.on('connection', (socket) => {
     socketSet.add(socket);
 
+    socket.on('exit', () => {
+      console.log('Shutting down...');
+      agonesSDK.shutdown();
+    });
+
     socket.on('disconnect', () => {
       socketSet.remove(socket);
     });
