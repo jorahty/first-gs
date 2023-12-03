@@ -1,13 +1,11 @@
-html {
-  color-scheme: light dark;
-}
-
-* {
-  font-family: system-ui;
-}
-
 body {
-  padding: 20px;
-  max-width: 600px;
-  margin: 0 auto;
+  margin: 0;
+  background: #000;
+  display: flex;
+  justify-content: center;
+}
+
+canvas {
+  width: 100%;
+  max-width: 900px;
 }
