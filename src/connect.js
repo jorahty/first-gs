@@ -82,12 +82,26 @@ const connect = async (server) => {
     );
   }, 1000 / 60);
 
+  const startMatch = () => {
+    const match_duration_in_minutes = 2;
+    const match_duration_in_ms = match_duration_in_minutes * 60 * 1000;
+    const deadline = new Date(Date.now() + match_duration_in_ms);
+    io.emit('deadline', deadline.toISOString());
+    console.log(`Shutting down after timeout of ${match_duration_in_minutes} minutes...`);
+    setTimeout(() => {
+      console.log('Shutting down...');
+      agonesSDK.shutdown();
+    }, match_duration_in_ms);
+  };
+
   let playerLeftIsTaken = false;
   const boostStrength = 0.003;
 
   // Handle client connection
   io.on('connection', (socket) => {
     socketSet.add(socket);
+
+    if (socketSet.size >= 2) startMatch();
 
     let player;
 
