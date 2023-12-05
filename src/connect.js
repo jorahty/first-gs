@@ -20,6 +20,7 @@ const connect = async (server) => {
   const io = new Server(server);
 
   const socketSet = new Set();
+  const score = { left: 0, right: 0 };
 
   // Create instance of Agones Game Server Client SDK
   const agonesSDK = new AgonesSDK();
@@ -143,6 +144,22 @@ const connect = async (server) => {
       Events.off(engine, 'beforeUpdate', movePlayer);
       socketSet.remove(socket);
     });
+  });
+
+  // Listen for goal
+  Events.on(engine, 'afterUpdate', () => {
+    const goalX = 750;
+    if (ball.position.x > goalX || ball.position.x < -goalX) {
+      const side = ball.position.x < 0 ? 'left' : 'right';
+
+      score[side]++;
+
+      io.emit('goal', side);
+
+      Body.setPosition(ball, { x: 0, y: 0 });
+      Body.setVelocity(ball, { x: 0, y: 0 });
+      return;
+    }
   });
 };
 
